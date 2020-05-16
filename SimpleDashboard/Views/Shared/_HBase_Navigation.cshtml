@@ -1,0 +1,132 @@
+﻿<head>
+    <style>
+        .navbar {
+            transition: all 0.4s;
+        }
+
+            .navbar .nav-link {
+                color: #fff;
+            }
+
+                .navbar .nav-link:hover,
+                .navbar .nav-link:focus {
+                    color: #fff;
+                    text-decoration: none;
+                }
+
+            .navbar .navbar-brand {
+                color: #fff;
+            }
+
+
+            /* Change navbar styling on scroll */
+            .navbar.active {
+                background: #fff;
+                box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+                .navbar.active .nav-link {
+                    color: #555;
+                }
+
+                    .navbar.active .nav-link:hover,
+                    .navbar.active .nav-link:focus {
+                        color: #555;
+                        text-decoration: none;
+                    }
+
+                .navbar.active .navbar-brand {
+                    color: #555;
+                }
+
+
+        .text-small {
+            font-size: 0.9rem !important;
+        }
+
+
+        body {
+            min-height: 110vh;
+            background-color: black;
+            background-image: linear-gradient(black,white,black);
+        }
+    </style>
+</head>
+<!-- Navbar-->
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fab fa-mdb"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Fine<sup>Qube</sup></div>
+        </a>
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Index", "Dashboards")">
+                <i class="fas fa-fw fa-list-alt"></i>
+                <span>Fixed Detail</span>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Index", "OverAll")">
+                <i class="fas fa-fw fa-boxes"></i>
+                <span>Over All  </span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Index", "Master")">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Top <sup>5</sup></span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Index", "Bubbles")">
+                <i class="fas fa-fw  fa-bullseye"></i>
+                <span>Bubbles</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider  my-0">
+
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Index", "SunBurst")">
+                <i class="fas fa-fw  fa-sun"></i>
+                <span>Sunburst</span>
+            </a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="@Url.Action("Index",  "H_Bubbles")">
+                <i class="fas fa-fw  fa-mail-bulk"></i>
+                <span>Bubbles</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        @*<div class="sidebar-heading">
+                Interface
+            </div>*@
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+ 

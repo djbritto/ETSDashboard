@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="adventure" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="adventureEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customer" EntityType="adventure.Customer" />
+    <EntitySet Name="Order" EntityType="adventure.Order" />
+    <EntitySet Name="OrderItem" EntityType="adventure.OrderItem" />
+    <EntitySet Name="Product" EntityType="adventure.Product" />
+    <EntitySet Name="Supplier" EntityType="adventure.Supplier" />
+    <EntitySet Name="order_master" EntityType="adventure.order_master" />
+    <AssociationSet Name="FK_ORDER_REFERENCE_CUSTOMER" Association="adventure.FK_ORDER_REFERENCE_CUSTOMER">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERITE_REFERENCE_ORDER" Association="adventure.FK_ORDERITE_REFERENCE_ORDER">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERITE_REFERENCE_PRODUCT" Association="adventure.FK_ORDERITE_REFERENCE_PRODUCT">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="OrderItem" EntitySet="OrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCT_REFERENCE_SUPPLIER" Association="adventure.FK_PRODUCT_REFERENCE_SUPPLIER">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Order" Relationship="adventure.FK_ORDER_REFERENCE_CUSTOMER" FromRole="Customer" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" />
+    <Property Name="OrderNumber" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="12" Scale="2" />
+    <NavigationProperty Name="Customer" Relationship="adventure.FK_ORDER_REFERENCE_CUSTOMER" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="OrderItem" Relationship="adventure.FK_ORDERITE_REFERENCE_ORDER" FromRole="Order" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="adventure.FK_ORDERITE_REFERENCE_ORDER" FromRole="OrderItem" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="adventure.FK_ORDERITE_REFERENCE_PRODUCT" FromRole="OrderItem" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="Package" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="IsDiscontinued" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="OrderItem" Relationship="adventure.FK_ORDERITE_REFERENCE_PRODUCT" FromRole="Product" ToRole="OrderItem" />
+    <NavigationProperty Name="Supplier" Relationship="adventure.FK_PRODUCT_REFERENCE_SUPPLIER" FromRole="Product" ToRole="Supplier" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="ContactName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ContactTitle" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Fax" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Product" Relationship="adventure.FK_PRODUCT_REFERENCE_SUPPLIER" FromRole="Supplier" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="order_master">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="RowNumber" Type="Int64" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="OrderNumber" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="12" Scale="2" />
+    <Property Name="OrderDate" Type="DateTime" />
+  </EntityType>
+  <Association Name="FK_ORDER_REFERENCE_CUSTOMER">
+    <End Role="Customer" Type="adventure.Customer" Multiplicity="1" />
+    <End Role="Order" Type="adventure.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERITE_REFERENCE_ORDER">
+    <End Role="Order" Type="adventure.Order" Multiplicity="1" />
+    <End Role="OrderItem" Type="adventure.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERITE_REFERENCE_PRODUCT">
+    <End Role="Product" Type="adventure.Product" Multiplicity="1" />
+    <End Role="OrderItem" Type="adventure.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCT_REFERENCE_SUPPLIER">
+    <End Role="Supplier" Type="adventure.Supplier" Multiplicity="1" />
+    <End Role="Product" Type="adventure.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

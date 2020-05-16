@@ -1,0 +1,813 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/Content/assets/img/favicon.png">
+    <title>
+        Black Dashboard by Creative Tim
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="~/Content/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="~/Content/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/Content/assets/demo/demo.css" rel="stylesheet" />
+    <link href="~/Content/assets/demo/demo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/Content/assets/css/datepicker.css">
+
+    <style type="text/css">
+        #result {
+            text-align: right;
+            color: gray;
+            min-height: 2em;
+        }
+
+        #table-sparkline {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td, th {
+            padding: 5px;
+            border-bottom: 1px solid silver;
+            height: 20px;
+        }
+
+        thead th {
+            border-top: 2px solid gray;
+            border-bottom: 2px solid gray;
+        }
+
+        .highcharts-tooltip > span {
+            background: white;
+            border: 1px solid silver;
+            border-radius: 3px;
+            box-shadow: 1px 1px 2px #888;
+            padding: 8px;
+        }
+
+        #container {
+            height: 500px;
+        }
+
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 320px;
+            max-width: 700px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+        .card-tasks .card-body i {
+            color: #54587f;
+            font-size: 1.4em;
+        }
+
+        .table-full-width {
+            max-height: 1100px !important;
+        }
+
+        .card-tasks {
+            height: 1000px;
+        }
+
+        .difference {
+            text-align: center;
+        }
+
+        .mt40 {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body class="">
+    <div class="wrapper">
+        @{ Html.RenderAction("SideMenu", "dashboard");}
+        <div class="main-panel">
+            <!-- End Navbar -->
+            <div class="content">
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 ">
+                        <div class="card card-tasks">
+                            <div class="card-header ">
+                                <h6 class="title d-inline">Application Summary</h6>
+                                <p class="card-category d-inline">Date : @DateTime.Now</p>
+                                <div><span>Date Range</span></div>
+                                <div class="c-datepicker-date-editor J-datepicker-range mt10">
+                                    <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+                                    <input id="fromdate" class="c-datepicker-data-input" value=@DateTime.Now>
+                                    <span class="c-datepicker-range-separator">-</span>
+                                    <input id="todate" class="c-datepicker-data-input" value=@DateTime.Now>
+                                </div>
+                                <button id="btnTrendFilter">Submit</button>
+                            </div>
+                            <div class="card-body ">
+                                <div class="table-full-width table-responsive">
+                                    <table id="table-sparkline" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%;text-align: center;">Application</th>
+                                                <th style="width:35%;text-align: center;">Trend</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody-sparkline">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; width: 400px;">
+                        <div class="progress progress-striped active">
+                            <div class="bar" style="width: 0%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/jquery.min.js"></script>
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!--  Google Maps Plugin    -->
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!-- Chart JS -->
+    <script src="~/Content/assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/Content/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <script src="~/Content/assets/demo/demo.js"></script>
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+
+    <script src="~/Content/assets/js/datepicker.all.js"></script>
+    <!-- <script src="js/datepicker.all.min.js"></script> -->
+    <script src="~/Content/assets/js/datepicker.en.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script type="text/javascript"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $sidebar = $('.sidebar');
+                $navbar = $('.navbar');
+                $main_panel = $('.main-panel');
+
+                $full_page = $('.full-page');
+
+                $sidebar_responsive = $('body > .navbar-collapse');
+                sidebar_mini_active = true;
+                white_color = false;
+
+                window_width = $(window).width();
+
+                fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+                $('.fixed-plugin a').click(function (event) {
+                    if ($(this).hasClass('switch-trigger')) {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else if (window.event) {
+                            window.event.cancelBubble = true;
+                        }
+                    }
+                });
+
+                $('.fixed-plugin .background-color span').click(function () {
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+
+                    var new_color = $(this).data('color');
+
+                    if ($sidebar.length != 0) {
+                        $sidebar.attr('data', new_color);
+                    }
+
+                    if ($main_panel.length != 0) {
+                        $main_panel.attr('data', new_color);
+                    }
+
+                    if ($full_page.length != 0) {
+                        $full_page.attr('filter-color', new_color);
+                    }
+
+                    if ($sidebar_responsive.length != 0) {
+                        $sidebar_responsive.attr('data', new_color);
+                    }
+                });
+
+                $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (sidebar_mini_active == true) {
+                        $('body').removeClass('sidebar-mini');
+                        sidebar_mini_active = false;
+                        blackDashboard.showSidebarMessage('Sidebar mini deactivated~/Content.');
+                    } else {
+                        $('body').addClass('sidebar-mini');
+                        sidebar_mini_active = true;
+                        blackDashboard.showSidebarMessage('Sidebar mini activated~/Content.');
+                    }
+
+                    // we simulate the window Resize so the charts will get updated in realtime.
+                    var simulateWindowResize = setInterval(function () {
+                        window.dispatchEvent(new Event('resize'));
+                    }, 180);
+
+                    // we stop the simulation of Window Resize after the animations are completed
+                    setTimeout(function () {
+                        clearInterval(simulateWindowResize);
+                    }, 1000);
+                });
+
+                $('.switch-change-color input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (white_color == true) {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').removeClass('white-content');
+                        }, 900);
+                        white_color = false;
+                    } else {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').addClass('white-content');
+                        }, 900);
+
+                        white_color = true;
+                    }
+
+
+                });
+
+                $('.light-badge').click(function () {
+                    $('body').addClass('white-content');
+                });
+
+                $('.dark-badge').click(function () {
+                    $('body').removeClass('white-content');
+                });
+            });
+        });</script>
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
+
+        });</script>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+        window.TrackJS &&
+            TrackJS.install({
+                token: "ee6fab19c5a04ac1a32a645abde4613a",
+                application: "black-dashboard-free"
+            });</script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('.J-datepicker-time').datePicker({
+                format: 'HH:mm:ss',
+                min: '04:23:11',
+                language: 'en'
+            });
+            $('.J-datepicker-time-range').datePicker({
+                format: 'HH:mm:ss',
+                isRange: true,
+                min: '04:23:11',
+                max: '20:59:59',
+                language: 'en'
+            });
+
+            
+
+            var DATAPICKERAPI = {
+                activeMonthRange: function () {
+                    return {
+                        begin: moment().set({ 'date': 1, 'hour': 0, 'minute': 0, 'second': 0 }).format('YYYY-MM-DD HH:mm:ss'),
+                        end: moment().set({ 'hour': 23, 'minute': 59, 'second': 59 }).format('YYYY-MM-DD HH:mm:ss')
+                    }
+                },
+                shortcutMonth: function () {
+                    var nowDay = moment().get('date');
+                    var prevMonthFirstDay = moment().subtract(1, 'months').set({ 'date': 1 });
+                    var prevMonthDay = moment().diff(prevMonthFirstDay, 'days');
+                    return {
+                        now: '-' + nowDay + ',0',
+                        prev: '-' + prevMonthDay + ',-' + nowDay
+                    }
+                },
+                shortcutPrevHours: function (hour) {
+                    var nowDay = moment().get('date');
+                    var prevHours = moment().subtract(hour, 'hours');
+                    var prevDate = prevHours.get('date') - nowDay;
+                    var nowTime = moment().format('HH:mm:ss');
+                    var prevTime = prevHours.format('HH:mm:ss');
+                    return {
+                        day: prevDate + ',0',
+                        time: prevTime + ',' + nowTime,
+                        name: 'Nearly ' + hour + ' Hours'
+                    }
+                },
+                rangeMonthShortcutOption1: function () {
+                    var result = DATAPICKERAPI.shortcutMonth();
+                    var resultTime = DATAPICKERAPI.shortcutPrevHours(18);
+
+
+                    return [{
+                        name: 'Yesterday',
+                        day: '-1,-1',
+                        time: '00:00:00,23:59:59'
+                    }, {
+                        name: 'This Month',
+                        day: result.now,
+                        time: '00:00:00,'
+                    }, {
+                        name: 'Lasy Month',
+                        day: result.prev,
+                        time: '00:00:00,23:59:59'
+                    }, {
+                        name: resultTime.name,
+                        day: resultTime.day,
+                        time: resultTime.time
+                    }];
+                },
+                rangeShortcutOption1: [{
+                    name: 'Last week',
+                    day: '-7,0'
+                }, {
+                    name: 'Last Month',
+                    day: '-30,0'
+                }, {
+                    name: 'Last Three Months',
+                    day: '-90, 0'
+                }],
+                singleShortcutOptions1: [{
+                    name: 'Today',
+                    day: '0',
+                    time: '00:00:00'
+                }, {
+                    name: 'Yesterday',
+                    day: '-1',
+                    time: '00:00:00'
+                }, {
+                    name: 'One Week Ago',
+                    day: '-7'
+                }]
+            };
+            $('.J-datepicker').datePicker({
+                hasShortcut: true,
+                language: 'en',
+                min: '2018-01-01 04:00:00',
+                max: '2029-10-29 20:59:59',
+                shortcutOptions: [{
+                    name: 'Today',
+                    day: '0'
+                }, {
+                    name: 'Yesterday',
+                    day: '-1',
+                    time: '00:00:00'
+                }, {
+                    name: 'One Week Ago',
+                    day: '-7'
+                }],
+                hide: function () {
+                    console.info(this)
+                }
+            });
+
+
+            $('.J-datepicker-day').datePicker({
+                hasShortcut: true,
+                language: 'en',
+                shortcutOptions: [{
+                    name: 'Today',
+                    day: '0'
+                }, {
+                    name: 'Yesterday',
+                    day: '-1'
+                }, {
+                    name: 'One week ago',
+                    day: '-7'
+                }]
+            });
+
+
+            $('.J-datepicker-range-day').datePicker({
+                hasShortcut: true,
+                language: 'en',
+                format: 'YYYY-MM-DD',
+                isRange: true,
+                shortcutOptions: DATAPICKERAPI.rangeShortcutOption1
+            });
+
+
+            $('.J-datepickerTime-single').datePicker({
+                format: 'YYYY-MM-DD HH:mm',
+                language: 'en',
+            });
+
+
+            $('.J-datepickerTime-range').datePicker({
+                format: 'YYYY-MM-DD HH:mm',
+                isRange: true,
+                language: 'en'
+            });
+
+
+            $('.J-datepicker-range').datePicker({
+                hasShortcut: true,
+                language: 'en',
+                min: '2020-01-01 06:00:00',
+                max: '2050-04-29 20:59:59',
+                isRange: true,
+                shortcutOptions: [{
+                    name: 'Yesterday',
+                    day: '-1,-1',
+                    time: '00:00:00,23:59:59'
+                }, {
+                    name: 'Last Week',
+                    day: '-7,0',
+                    time: '00:00:00,'
+                }, {
+                    name: 'Last Month',
+                    day: '-30,0',
+                    time: '00:00:00,'
+                }, {
+                    name: 'Last Three Months',
+                    day: '-90, 0',
+                    time: '00:00:00,'
+                } 
+                ],
+                hide: function (type) {
+                    console.info(this.$input.eq(0).val(), this.$input.eq(1).val());
+                    console.info('Type:', type)
+                }
+            });
+            $('.J-datepicker-range-betweenMonth').datePicker({
+                isRange: true,
+                between: 'month',
+                language: 'en',
+                hasShortcut: true,
+                shortcutOptions: DATAPICKERAPI.rangeMonthShortcutOption1()
+            });
+
+
+            $('.J-datepicker-range-between30').datePicker({
+                isRange: true,
+                language: 'en',
+                between: 30
+            });
+
+            $('.J-yearMonthPicker-single').datePicker({
+                format: 'YYYY-MM',
+                language: 'en',
+                min: '2018-01',
+                max: '2029-04',
+                hide: function (type) {
+                    console.info(this.$input.eq(0).val());
+                }
+            });
+
+            $('.J-yearPicker-single').datePicker({
+                format: 'YYYY',
+                language: 'en',
+                min: '2018',
+                max: '2029'
+            });
+
+
+        });
+    </script>
+
+
+    <script id="spline-template" type="text/x-handlebars-template">
+        {{#each gameProbeDatas}}
+        <tr data-id={{id}}>
+            <th>{{GameName}}</th>
+            <td data-sparkline="{{UsuageDetailsJson}}" class="data-fixed" />
+
+        </tr>
+        {{/each}}
+    </script>
+
+    <script type="text/javascript">
+        
+        Highcharts.SparkLine = function (a, b, c) {
+            var hasRenderToArg = typeof a === 'string' || a.nodeName,
+                options = arguments[hasRenderToArg ? 1 : 0],
+                defaultOptions = {
+                    chart: {
+                        renderTo: (options.chart && options.chart.renderTo) || this,
+                        backgroundColor: null,
+                        borderWidth: 0,
+                        type: 'area',
+                        margin: [2, 0, 2, 0],
+
+                        style: {
+                            overflow: 'visible'
+                        },
+                        
+                        skipClone: true
+                    },
+                    title: {
+                        text: ''
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        labels: {
+                            enabled: false
+                        },
+                        title: {
+                            text: null
+                        },
+                        startOnTick: false,
+                        endOnTick: false,
+                        tickPositions: []
+                    },
+                    yAxis: {
+                        endOnTick: false,
+                        startOnTick: false,
+                        labels: {
+                            enabled: false
+                        },
+                        title: {
+                            text: null
+                        },
+                        tickPositions: [0]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        hideDelay: 0,
+                        outside: true,
+                        shared: true
+                    },
+                    plotOptions: {
+                        series: {
+                            animation: false,
+                            lineWidth: 1,
+                            shadow: false,
+                            states: {
+                                hover: {
+                                    lineWidth: 1
+                                }
+                            },
+                            marker: {
+                                radius: 1,
+                                states: {
+                                    hover: {
+                                        radius: 2
+                                    }
+                                }
+                            },
+                            fillOpacity: 0.25
+                        },
+                        column: {
+                            negativeColor: '#910000',
+                            borderColor: 'silver'
+                        }
+                    }
+                };
+
+            options = Highcharts.merge(defaultOptions, options);
+
+            return hasRenderToArg ?
+                new Highcharts.Chart(a, options, c) :
+                new Highcharts.Chart(options, b);
+        };
+
+        function getDateFromAspNetFormat(date) {
+            const re = /-?\d+/;
+            const m = re.exec(date);
+            return parseInt(m[0], 10);
+        };
+
+        function doChunk() {
+
+            var start = +new Date(),
+                $tds = $('td[data-sparkline]'),
+                fullLen = $tds.length,
+                n = 0;
+
+            var ChartReference = {};
+
+            var time = +new Date(),
+                i,
+                len = $tds.length,
+                $td,
+                stringdata,
+                arr,
+                data,
+                chart;
+
+            //var colors = [
+            //    "#ef5350", "#EC407A", "#AB47BC", "#7E57C2", "#5C6BC0", "#42A5F5", "#29B6F6", "#26C6DA", "#26A69A", "#66BB6A", "#9CCC65", "#D4E157", "#FFEE58", "#FFCA28", "#FFA726", "#FF7043"
+            //];
+
+            var colors = ["#42A5F5"];
+
+            for (i = 0; i < len; i += 1) {
+                var series = [];
+                series.push({ data: [] });
+                $td = $($tds[i]);
+                jsonData = $td.data('sparkline');
+                var id = parseInt($td.parent().data('id'));
+                var fixed = $td.hasClass("data-fixed");
+
+                for (var j = 0, l = jsonData.length; j < l; j++) {
+
+                    //var dateVal = Date.parse(getDateFromAspNetFormat(jsonData[j].UsageDate));
+                    //var dateVal  = Date.parse(jsonData[j].UsageDate);
+                    //var dateVal = new Date(parseInt(jsonData[j].UsageDate.substr(6)));
+                    //var dateVal =  eval("new " + UsuageDateStr.slice(1, -1));
+
+                    var dateVal = Date.parse(jsonData[j].UsuageDateStr + " GMT");
+
+                    series[0].data[j] = [dateVal, jsonData[j].RTT];
+
+
+                }
+                var color = colors[id % colors.length];
+                series[0].color = color;
+                console.log(series);
+
+                $td.parent().find('th').css('color', color);
+                $td.parent().find('.difference').attr('style', 'color : ' + color + ' !important');
+                //var width = $($td).width();
+                //chart = {"width": width };
+
+                var width = $($td).width();
+                chart = {};
+
+
+                var highcharts = $td.highcharts('SparkLine', {
+                    series: series,
+                    tooltip: {
+                        headerFormat: '<span style="font-size: 10px">' + $td.parent().find('th').html() + ', {point.x:%a %d %b %H:%M:%S}</span><br />',
+                        pointFormat: '<b>{point.y}</b> PB'
+                    },
+                    chart: chart,
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                }).highcharts();
+
+                n += 1;
+                
+                if (n === fullLen) {
+                    $('#result').html('Generated ' + fullLen + ' sparklines in ' + (new Date() - start) + ' ms');
+                }
+
+            }
+                       
+            Highcharts.charts.forEach(chart => {
+                // $(chart.container).width($(chart.container).parent().width() - 10);
+                //  $(chart.container).find("svg").width($(chart.container).parent().width() - 10);
+                chart.reflow();
+            });
+
+            $(".highcharts-xaxis").find('.highcharts-axis-line').attr('stroke', '#37474F')
+        }
+                     
+        function bindData(data) {
+            //debugger;
+            for (var i = 0; i < data.gameProbeDatas.length; i++) {
+                data.gameProbeDatas[i].id = i;
+                data.gameProbeDatas[i].UsuageDetailsJson = JSON.stringify(data.gameProbeDatas[i].ProbeDetail);
+            }
+            var source = document.getElementById("spline-template").innerHTML;
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            $("#tbody-sparkline").html(html);
+
+            doChunk();
+        };
+
+        Handlebars.registerHelper('iff', function (a, operator, b, opts) {
+            var bool = false;
+            switch (operator) {
+                case '==':
+                    bool = a == b;
+                    break;
+                case '>':
+                    bool = a > b;
+                    break;
+                case '<':
+                    bool = a < b;
+                    break;
+                default:
+                    throw "Unknown operator " + operator;
+            }
+
+            if (bool) {
+                return opts.fn(this);
+            } else {
+                return opts.inverse(this);
+            }
+        });
+
+        $(function () {
+
+            $("#btnTrendFilter").click(function () {
+                buildData();
+            });
+
+            function fetchData(fromdate, todate) {
+                $.getJSON(`/EProbe/GetProbeData?fromdate=${fromdate}&todate=${todate}`, function (data) {
+                    bindData(data);
+                });
+            };
+
+            function buildData() {
+                var fromdate = $("#fromdate").val();
+                var todate = $("#todate").val();
+                fetchData(fromdate, todate);
+            };
+            buildData();
+        });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

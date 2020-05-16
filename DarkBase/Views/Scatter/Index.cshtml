@@ -1,0 +1,474 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/Content/assets/img/favicon.png">
+    <title>
+        Black Dashboard by Creative Tim
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="~/Content/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="~/Content/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/Content/assets/demo/demo.css" rel="stylesheet" />
+    <link href="~/Content/assets/demo/demo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+        #result {
+            text-align: right;
+            color: gray;
+            min-height: 2em;
+        }
+
+        #table-sparkline {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td, th {
+            padding: 5px;
+            border-bottom: 1px solid silver;
+            height: 20px;
+        }
+
+        thead th {
+            border-top: 2px solid gray;
+            border-bottom: 2px solid gray;
+        }
+
+        .highcharts-tooltip > span {
+            background: white;
+            border: 1px solid silver;
+            border-radius: 3px;
+            box-shadow: 1px 1px 2px #888;
+            padding: 8px;
+        }
+
+        #container {
+            height: 500px;
+        }
+
+
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 320px;
+            max-width: 700px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+        .card-tasks .card-body i {
+            color: #54587f;
+            font-size: 1.4em;
+        }
+
+        .difference {
+            text-align: center;
+        }
+
+        .highcharts-background {
+            fill: transparent;
+        }
+
+        .highcharts-title {
+            display: none !important;
+        }
+
+
+        .highcharts-credits {
+            display: none !important;
+        }
+
+        .highcharts-container, .highcharts-container svg {
+            width: 100% !important;
+        }
+
+        .card-body {
+            height: 1000px;
+            width: 1000px;
+        }
+
+        .chart-area {
+            height: 1000px;
+            width: 1000px;
+        }
+
+        .cardhcount {
+            height: 300px;
+            width: 1225px;
+        }
+    </style>
+</head>
+
+<body class="">
+    <div class="wrapper">
+        @{ Html.RenderAction("SideMenu", "dashboard");}
+        <div class="main-panel">
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-chart">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">Over All Usage</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <div id="container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/jquery.min.js"></script>
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!--  Google Maps Plugin    -->
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!-- Chart JS -->
+    <script src="~/Content/assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/Content/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <script src="~/Content/assets/demo/demo.js"></script>
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $sidebar = $('.sidebar');
+                $navbar = $('.navbar');
+                $main_panel = $('.main-panel');
+
+                $full_page = $('.full-page');
+
+                $sidebar_responsive = $('body > .navbar-collapse');
+                sidebar_mini_active = true;
+                white_color = false;
+
+                window_width = $(window).width();
+
+                fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+                $('.fixed-plugin a').click(function (event) {
+                    if ($(this).hasClass('switch-trigger')) {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else if (window.event) {
+                            window.event.cancelBubble = true;
+                        }
+                    }
+                });
+
+                $('.fixed-plugin .background-color span').click(function () {
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+
+                    var new_color = $(this).data('color');
+
+                    if ($sidebar.length != 0) {
+                        $sidebar.attr('data', new_color);
+                    }
+
+                    if ($main_panel.length != 0) {
+                        $main_panel.attr('data', new_color);
+                    }
+
+                    if ($full_page.length != 0) {
+                        $full_page.attr('filter-color', new_color);
+                    }
+
+                    if ($sidebar_responsive.length != 0) {
+                        $sidebar_responsive.attr('data', new_color);
+                    }
+                });
+
+                $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (sidebar_mini_active == true) {
+                        $('body').removeClass('sidebar-mini');
+                        sidebar_mini_active = false;
+                        blackDashboard.showSidebarMessage('Sidebar mini deactivated~/Content.');
+                    } else {
+                        $('body').addClass('sidebar-mini');
+                        sidebar_mini_active = true;
+                        blackDashboard.showSidebarMessage('Sidebar mini activated~/Content.');
+                    }
+
+                    // we simulate the window Resize so the charts will get updated in realtime.
+                    var simulateWindowResize = setInterval(function () {
+                        window.dispatchEvent(new Event('resize'));
+                    }, 180);
+
+                    // we stop the simulation of Window Resize after the animations are completed
+                    setTimeout(function () {
+                        clearInterval(simulateWindowResize);
+                    }, 1000);
+                });
+
+                $('.switch-change-color input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (white_color == true) {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').removeClass('white-content');
+                        }, 900);
+                        white_color = false;
+                    } else {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').addClass('white-content');
+                        }, 900);
+
+                        white_color = true;
+                    }
+
+
+                });
+
+                $('.light-badge').click(function () {
+                    $('body').addClass('white-content');
+                });
+
+                $('.dark-badge').click(function () {
+                    $('body').removeClass('white-content');
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/Scatter/GetProbeScatter", function (data) {
+                debugger;
+                var UsageDate = [];
+                var GameName = [];
+                var Server = [];
+                var RTT = [];
+                var UsuageDateStr = [];
+                var z = 0;
+                var seriesData = [];
+
+                for (var i = 0; i < data.ScatterData.length; i++) {
+                    GameName.push(data.ScatterData[i].GameName);
+                    Server.push(data.ScatterData[i].Server);
+                    RTT.push(data.ScatterData[i].RTT);
+                    UsuageDateStr.push(data.ScatterData[i].UsuageDateStr);
+                   // UsageDate.push(data.ScatterData[i].UsageDate);
+                    var sData = {
+                        x: UsuageDateStr[i],
+                        y: RTT[i], 
+                        z:0,
+                        name: Server[i],
+                        country: GameName[i]
+                    };
+                    seriesData.push(sData);
+                }
+
+
+                Highcharts.chart('container', {
+
+                    chart: {
+                        type: 'bubble',
+                        plotBorderWidth: 1,
+                        zoomType: 'xy'
+                    },
+
+                    legend: {
+                        enabled: false
+                    },
+
+                    title: {
+                        text: 'Sugar and fat intake per country'
+                    },
+
+                    subtitle: {
+                        text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
+                    },
+
+                    accessibility: {
+                        point: {
+                            valueDescriptionFormat: '{index}. {point.country}, fat: {point.x}g, sugar: {point.y}g'
+                        }
+                    },
+
+                    xAxis: {
+                        gridLineWidth: 1,
+                        title: {
+                            text: 'Daily fat intake'
+                        },
+                        labels: {
+                            format: '{value} gr'
+                        },
+                        plotLines: [{
+                            color: 'black',
+                            dashStyle: 'dot',
+                            width: 2,
+                            value: 65,
+                            label: {
+                                rotation: 0,
+                                y: 15,
+                                style: {
+                                    fontStyle: 'italic'
+                                },
+                                text: 'Safe fat intake 65g/day'
+                            },
+                            zIndex: 3
+                        }],
+                        accessibility: {
+                            rangeDescription: 'Range: 60 to 100 grams.'
+                        }
+                    },
+
+                    yAxis: {
+                        startOnTick: false,
+                        endOnTick: false,
+                        title: {
+                            text: 'Daily sugar intake'
+                        },
+                        labels: {
+                            format: '{value} gr'
+                        },
+                        maxPadding: 0.2,
+                        plotLines: [{
+                            color: 'black',
+                            dashStyle: 'dot',
+                            width: 2,
+                            value: 50,
+                            label: {
+                                align: 'right',
+                                style: {
+                                    fontStyle: 'italic'
+                                },
+                                text: 'Safe sugar intake 50g/day',
+                                x: -10
+                            },
+                            zIndex: 3
+                        }],
+                        accessibility: {
+                            rangeDescription: 'Range: 0 to 160 grams.'
+                        }
+                    },
+
+                    tooltip: {
+                        useHTML: true,
+                        headerFormat: '<table>',
+                        pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
+                            '<tr><th>Fat intake:</th><td>{point.x}g</td></tr>' +
+                            '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>',
+                        footerFormat: '</table>',
+                        followPointer: true
+                    },
+
+                    plotOptions: {
+                        series: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}'
+                            }
+                        }
+                    },
+
+                    series: [{
+                        data: seriesData
+                    }]
+
+                });
+            });
+        });
+
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
+
+        });</script>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+        window.TrackJS &&
+            TrackJS.install({
+                token: "ee6fab19c5a04ac1a32a645abde4613a",
+                application: "black-Trends-free"
+            });</script>
+
+
+
+</body>
+</html>

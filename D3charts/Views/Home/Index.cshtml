@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@section styles{
+
+    <link href="~/Content/chart/bubble/css/bubble_chart.css" rel="stylesheet" />
+    <link href="~/Content/chart/bubble/css/reset.css" rel="stylesheet" />
+
+    <style>
+        .tooltip{
+            border:solid 1px rgba(8, 8, 8, 0.20);
+            background-color:rgba(255, 255, 255, 0.9);
+        }
+    </style>
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <h1>Fixed Data Usage</h1>
+            <div id="toolbar">
+                <a href="#" id="application" class="button active">By Application</a>
+                <a href="#" id="month" class="button">By Month</a>
+                <a href="#" id="date" class="button">By Date</a>
+            </div>
+            <div id="vis"></div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script src="~/Content/chart/bubble/src/tooltip.js"></script>
+    <script src="~/Content/chart/bubble/src/bubble_chart.js"></script>
+}

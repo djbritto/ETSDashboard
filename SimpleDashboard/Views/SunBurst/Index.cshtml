@@ -1,0 +1,241 @@
+﻿
+@{
+    Layout = null;
+}
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sunburst</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="~/Content/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/Content/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 320px;
+            max-width: 800px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <div class="panel panel-body">
+        <div id="wrapper">
+            @{ Html.RenderAction("SideMenu", "Dashboards");}
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary">Current Week Fixed Applications</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-area" style="height:100%;">
+                                            <figure class="highcharts-figure">
+                                                <div id="container"></div>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Content/js/sb-admin-2.min.js"></script>
+
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/SunBurst/GetSunBurst", function (data) {
+            debugger;
+            var sburnData = [];
+            var id = [];
+            var parent = [];
+            var date = [];
+            var name = [];
+            var value = [];
+            var subRootArray = [];
+            //Creating root parent
+            var rootParent = {
+                id: 'AppUsage',
+                parent: '',
+                name: 'The App Usage'
+            };
+
+            sburnData.push(rootParent);          
+            for (var i = 0; i < data.sbpoints.s_sbring_hd.length; i++) {
+                var lines = {
+                    id: data.sbpoints.s_sbring_hd[i].U_Id+"_1",
+                    parent: rootParent.id,
+                    name: data.sbpoints.s_sbring_hd[i].U_Id
+                };
+                sburnData.push(lines);
+            }
+
+
+            for (var j = 0; j < data.sbpoints.s_sbring_hd.length; j++) {
+                var subRoot = {
+                    id: data.sbpoints.s_sbring_hd[j].U_Id+"_2",
+                    parent: data.sbpoints.s_sbring_hd[j].U_Id+"_1",
+                    name: data.sbpoints.s_sbring_hd[j].U_Id
+                };
+                subRootArray.push(subRoot);
+            }
+
+
+            for (var i = 0; i < subRootArray.length; i++) {
+                var name = subRootArray[i].name;
+                var subHead = {
+                    id: name+"_2",
+                    parent: name + "_1",
+                    name: name
+                };
+                sburnData.push(subHead);
+                for (var j = 0; j < data.sbpoints.s_burn_Detail.length; j++) {
+                    if (name === data.sbpoints.s_burn_Detail[j].d_ApplicationName) {
+                        var value = {
+                            id: data.sbpoints.s_burn_Detail[j].d_ApplicationName + "_3",
+                            parent: data.sbpoints.s_burn_Detail[j].d_ApplicationName + "_2",
+                            name: data.sbpoints.s_burn_Detail[j].sburnDate,
+                            value: data.sbpoints.s_burn_Detail[j].TotalUsage
+                        };
+                        sburnData.push(value);
+                    }
+                }
+            };
+
+           
+            debugger;
+            Highcharts.getOptions().colors.splice(0, 0, 'transparent');
+            Highcharts.chart('container', {
+
+                chart: {
+                    height: '100%'
+                },
+
+                title: {
+                    text: 'Data Usage Master'
+                },
+
+                series: [{
+                    type: "sunburst",
+                    data: sburnData,
+                    allowDrillToNode: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        format: '{point.name}',
+                        filter: {
+                            property: 'innerArcLength',
+                            operator: '>',
+                            value: 16
+                        }
+                    },
+                    levels: [{
+                        level: 1,
+                        levelIsConstant: false,
+                        dataLabels: {
+                            filter: {
+                                property: 'outerArcLength',
+                                operator: '>',
+                                value: 64
+                            }
+                        }
+                    }, {
+                        level: 2,
+                        colorByPoint: true
+                    },
+                    {
+                        level: 3,
+                        colorVariation: {
+                            key: 'brightness',
+                            to: -0.5
+                        }
+                    }, {
+                        level: 4,
+                        colorVariation: {
+                            key: 'brightness',
+                            to: 0.5
+                        }
+                    }]
+
+                }],
+                tooltip: {
+                    headerFormat: "",
+                    pointFormat: 'The Usage on <b>{point.name}</b> is <b>{point.value}</b> PB'
+                }
+            });
+        });
+
+    });
+
+</script>

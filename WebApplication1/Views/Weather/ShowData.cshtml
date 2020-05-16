@@ -1,0 +1,60 @@
+﻿<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Test Data from API
+    </div>   <!--en dof panel-heading -->
+    <div class="panel-body">
+        <table class="table table-bordered" id="Table">
+            <tr>
+                <th>title</th>
+                <th>location_type</th>
+                <th>woeid</th>
+                <th>woeid</th>
+                <th>latt_long</th>
+            </tr>   <!--end of table-row -->
+        </table>   <!--end of table -->
+    </div> <!--end of Panel-body -->
+</div> <!--end of Panel -->
+
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        $.ajax({
+            
+            type: "GET",
+            url: "api/AjaxAPI/AjaxMethod",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+
+
+                $("#DIV").html('');
+                var DIV = '';
+                $.each(data, function (i, item) {
+
+                    var rows = "<tr>" +
+                        "<td id='title'>" + item.title + "</td>" +
+                        "<td id='location_type'>" + item.location_type + "</td>" +
+                        "<td id='woeid'>" + item.woeid + "</td>" +
+                        "<td id='latt_long'>" + item.latt_long + "</td>" +                         
+                        "</tr>";
+                    $('#Table').append(rows);
+                }); //End of foreach Loop
+                console.log(data);
+            }, //End of AJAX Success function
+
+            failure: function (data) {
+
+                alert(data.responseText);
+            }, //End of AJAX failure function
+            error: function (data) {
+
+                alert(data.responseText);
+            } //End of AJAX error function
+
+        });
+    });
+</script>  

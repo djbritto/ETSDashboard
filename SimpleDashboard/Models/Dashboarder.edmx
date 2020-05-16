@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AdventureModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="fixed_top_ups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="float" />
+          <Property Name="Facebook" Type="float" />
+          <Property Name="TikTok" Type="float" />
+          <Property Name="Google" Type="float" />
+          <Property Name="Twitter" Type="float" />
+          <Property Name="Youtube" Type="float" />
+          <Property Name="iCloud" Type="float" />
+          <Property Name="Amazon" Type="float" />
+          <Property Name="HTTP" Type="float" />
+          <Property Name="Instagram" Type="float" />
+          <Property Name="ZOOM" Type="float" />
+          <Property Name="HTTPS" Type="float" />
+          <Property Name="Netflix" Type="float" />
+          <Property Name="Snapchat" Type="float" />
+          <Property Name="Whatsapp" Type="float" />
+          <Property Name="BOT" Type="float" />
+          <Property Name="ToTok" Type="float" />
+          <Property Name="RTP" Type="float" />
+          <Property Name="iTunes" Type="float" />
+          <Property Name="MicrosoftTeams" Type="float" />
+        </EntityType>
+        <Function Name="prc_comb_master" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_combined_vol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_date_fixed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_get_peek_count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_m_sum_apps_usage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_mobile_sum_apps_usage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_sum_apps_usage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_sum_apps_usage_date" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_sum_apps_usage_date1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_sum_fixed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_top5_fixed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_top5_mobile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="AdventureModelStoreContainer">
+          <EntitySet Name="fixed_top_ups" EntityType="Self.fixed_top_ups" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdventureModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AdventureEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="fixed_top_ups" EntityType="AdventureModel.fixed_top_ups" />
+          <FunctionImport Name="prc_sum_fixed" ReturnType="Collection(AdventureModel.prc_sum_fixed_Result)" />
+          <FunctionImport Name="prc_date_fixed" ReturnType="Collection(Double)" />
+          <FunctionImport Name="prc_sum_apps_usage" ReturnType="Collection(AdventureModel.prc_sum_apps_usage_Result)" />
+          <FunctionImport Name="prc_sum_apps_usage_date" ReturnType="Collection(AdventureModel.prc_sum_apps_usage_date_Result)" />
+          <FunctionImport Name="prc_sum_apps_usage_date1" ReturnType="Collection(AdventureModel.prc_sum_apps_usage_date1_Result)" />
+          <FunctionImport Name="prc_comb_master" ReturnType="Collection(AdventureModel.prc_comb_master_Result)" />
+          <FunctionImport Name="prc_top5_mobile" ReturnType="Collection(AdventureModel.prc_top5_mobile_Result)" />
+          <FunctionImport Name="prc_top5_fixed" ReturnType="Collection(AdventureModel.prc_top5_fixed_Result)" />
+          <FunctionImport Name="prc_mobile_sum_apps_usage" ReturnType="Collection(AdventureModel.prc_mobile_sum_apps_usage_Result)" />
+          <FunctionImport Name="prc_combined_vol" ReturnType="Collection(AdventureModel.prc_combined_vol_Result)" />
+          <FunctionImport Name="prc_m_sum_apps_usage" ReturnType="Collection(AdventureModel.prc_m_sum_apps_usage_Result)" />
+          <FunctionImport Name="prc_get_peek_count" ReturnType="Collection(AdventureModel.prc_get_peek_count_Result)" />
+        </EntityContainer>
+        <EntityType Name="fixed_top_ups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="Double" />
+          <Property Name="Facebook" Type="Double" />
+          <Property Name="TikTok" Type="Double" />
+          <Property Name="Google" Type="Double" />
+          <Property Name="Twitter" Type="Double" />
+          <Property Name="Youtube" Type="Double" />
+          <Property Name="iCloud" Type="Double" />
+          <Property Name="Amazon" Type="Double" />
+          <Property Name="HTTP" Type="Double" />
+          <Property Name="Instagram" Type="Double" />
+          <Property Name="ZOOM" Type="Double" />
+          <Property Name="HTTPS" Type="Double" />
+          <Property Name="Netflix" Type="Double" />
+          <Property Name="Snapchat" Type="Double" />
+          <Property Name="Whatsapp" Type="Double" />
+          <Property Name="BOT" Type="Double" />
+          <Property Name="ToTok" Type="Double" />
+          <Property Name="RTP" Type="Double" />
+          <Property Name="iTunes" Type="Double" />
+          <Property Name="MicrosoftTeams" Type="Double" />
+        </EntityType>
+        <ComplexType Name="prc_sum_fixed_Result">
+          <Property Type="Double" Name="Facebook" Nullable="true" />
+          <Property Type="Double" Name="TikTok" Nullable="true" />
+          <Property Type="Double" Name="Google" Nullable="true" />
+          <Property Type="Double" Name="Twitter" Nullable="true" />
+          <Property Type="Double" Name="Youtube" Nullable="true" />
+          <Property Type="Double" Name="iCloud" Nullable="true" />
+          <Property Type="Double" Name="Amazon" Nullable="true" />
+          <Property Type="Double" Name="HTTP" Nullable="true" />
+          <Property Type="Double" Name="Instagram" Nullable="true" />
+          <Property Type="Double" Name="ZOOM" Nullable="true" />
+          <Property Type="Double" Name="HTTPS" Nullable="true" />
+          <Property Type="Double" Name="Netflix" Nullable="true" />
+          <Property Type="Double" Name="Snapchat" Nullable="true" />
+          <Property Type="Double" Name="Whatsapp" Nullable="true" />
+          <Property Type="Double" Name="BOT" Nullable="true" />
+          <Property Type="Double" Name="ToTok" Nullable="true" />
+          <Property Type="Double" Name="RTP" Nullable="true" />
+          <Property Type="Double" Name="iTunes" Nullable="true" />
+          <Property Type="Double" Name="MicrosoftTeams" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_sum_apps_usage_Result">
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Double" Name="usage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_sum_apps_usage_date_Result">
+          <Property Type="Double" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Double" Name="usage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_sum_apps_usage_date1_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Double" Name="usage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_comb_master_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="fixed" Nullable="true" />
+          <Property Type="Double" Name="mobile" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_top5_mobile_Result">
+          <Property Type="Decimal" Name="usage" Nullable="true" Precision="10" Scale="6" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="prc_top5_fixed_Result">
+          <Property Type="Decimal" Name="usage" Nullable="true" Precision="10" Scale="6" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="prc_mobile_sum_apps_usage_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Double" Name="usage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_combined_vol_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Decimal" Name="fixed" Nullable="true" Precision="10" Scale="6" />
+          <Property Type="Decimal" Name="mobile" Nullable="true" Precision="10" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="prc_m_sum_apps_usage_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Double" Name="usage" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_get_peek_count_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="Hour" Nullable="true" />
+          <Property Type="Double" Name="IPTV_Users_Count" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdventureModelStoreContainer" CdmEntityContainer="AdventureEntities" >
+          <EntitySetMapping Name="fixed_top_ups">
+            <EntityTypeMapping TypeName="AdventureModel.fixed_top_ups">
+              <MappingFragment StoreEntitySet="fixed_top_ups">
+                <ScalarProperty Name="MicrosoftTeams" ColumnName="MicrosoftTeams" />
+                <ScalarProperty Name="iTunes" ColumnName="iTunes" />
+                <ScalarProperty Name="RTP" ColumnName="RTP" />
+                <ScalarProperty Name="ToTok" ColumnName="ToTok" />
+                <ScalarProperty Name="BOT" ColumnName="BOT" />
+                <ScalarProperty Name="Whatsapp" ColumnName="Whatsapp" />
+                <ScalarProperty Name="Snapchat" ColumnName="Snapchat" />
+                <ScalarProperty Name="Netflix" ColumnName="Netflix" />
+                <ScalarProperty Name="HTTPS" ColumnName="HTTPS" />
+                <ScalarProperty Name="ZOOM" ColumnName="ZOOM" />
+                <ScalarProperty Name="Instagram" ColumnName="Instagram" />
+                <ScalarProperty Name="HTTP" ColumnName="HTTP" />
+                <ScalarProperty Name="Amazon" ColumnName="Amazon" />
+                <ScalarProperty Name="iCloud" ColumnName="iCloud" />
+                <ScalarProperty Name="Youtube" ColumnName="Youtube" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="Google" ColumnName="Google" />
+                <ScalarProperty Name="TikTok" ColumnName="TikTok" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="prc_sum_fixed" FunctionName="AdventureModel.Store.prc_sum_fixed">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_sum_fixed_Result">
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="TikTok" ColumnName="TikTok" />
+                <ScalarProperty Name="Google" ColumnName="Google" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="Youtube" ColumnName="Youtube" />
+                <ScalarProperty Name="iCloud" ColumnName="iCloud" />
+                <ScalarProperty Name="Amazon" ColumnName="Amazon" />
+                <ScalarProperty Name="HTTP" ColumnName="HTTP" />
+                <ScalarProperty Name="Instagram" ColumnName="Instagram" />
+                <ScalarProperty Name="ZOOM" ColumnName="ZOOM" />
+                <ScalarProperty Name="HTTPS" ColumnName="HTTPS" />
+                <ScalarProperty Name="Netflix" ColumnName="Netflix" />
+                <ScalarProperty Name="Snapchat" ColumnName="Snapchat" />
+                <ScalarProperty Name="Whatsapp" ColumnName="Whatsapp" />
+                <ScalarProperty Name="BOT" ColumnName="BOT" />
+                <ScalarProperty Name="ToTok" ColumnName="ToTok" />
+                <ScalarProperty Name="RTP" ColumnName="RTP" />
+                <ScalarProperty Name="iTunes" ColumnName="iTunes" />
+                <ScalarProperty Name="MicrosoftTeams" ColumnName="MicrosoftTeams" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_date_fixed" FunctionName="AdventureModel.Store.prc_date_fixed" />
+          <FunctionImportMapping FunctionImportName="prc_sum_apps_usage" FunctionName="AdventureModel.Store.prc_sum_apps_usage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_sum_apps_usage_Result">
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="usage" ColumnName="usage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_sum_apps_usage_date" FunctionName="AdventureModel.Store.prc_sum_apps_usage_date">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_sum_apps_usage_date_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="usage" ColumnName="usage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_sum_apps_usage_date1" FunctionName="AdventureModel.Store.prc_sum_apps_usage_date1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_sum_apps_usage_date1_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="usage" ColumnName="usage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_comb_master" FunctionName="AdventureModel.Store.prc_comb_master">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_comb_master_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="fixed" ColumnName="fixed" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_top5_mobile" FunctionName="AdventureModel.Store.prc_top5_mobile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_top5_mobile_Result">
+                <ScalarProperty Name="usage" ColumnName="usage" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_top5_fixed" FunctionName="AdventureModel.Store.prc_top5_fixed">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_top5_fixed_Result">
+                <ScalarProperty Name="usage" ColumnName="usage" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_mobile_sum_apps_usage" FunctionName="AdventureModel.Store.prc_mobile_sum_apps_usage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_mobile_sum_apps_usage_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="usage" ColumnName="usage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_combined_vol" FunctionName="AdventureModel.Store.prc_combined_vol">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_combined_vol_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="fixed" ColumnName="fixed" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_m_sum_apps_usage" FunctionName="AdventureModel.Store.prc_m_sum_apps_usage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_m_sum_apps_usage_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="usage" ColumnName="usage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_get_peek_count" FunctionName="AdventureModel.Store.prc_get_peek_count">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_get_peek_count_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+                <ScalarProperty Name="IPTV_Users_Count" ColumnName="IPTV Users Count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

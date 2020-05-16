@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AdventureModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Adventure.dbo.eprobe_fin_dest' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="eprobe_fin_dest">
+          <Key>
+            <PropertyRef Name="DateTime" />
+            <PropertyRef Name="ProbeID" />
+            <PropertyRef Name="GameName" />
+            <PropertyRef Name="ServerIP" />
+            <PropertyRef Name="RTT" />
+          </Key>
+          <Property Name="DateTime" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ProbeID" Type="int" Nullable="false" />
+          <Property Name="GameName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ServerLocation" Type="nvarchar" MaxLength="50" />
+          <Property Name="ServerIP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RTT" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="fixed_top_ups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="float" />
+          <Property Name="Facebook" Type="float" />
+          <Property Name="TikTok" Type="float" />
+          <Property Name="Google" Type="float" />
+          <Property Name="Twitter" Type="float" />
+          <Property Name="Youtube" Type="float" />
+          <Property Name="iCloud" Type="float" />
+          <Property Name="Amazon" Type="float" />
+          <Property Name="HTTP" Type="float" />
+          <Property Name="Instagram" Type="float" />
+          <Property Name="ZOOM" Type="float" />
+          <Property Name="HTTPS" Type="float" />
+          <Property Name="Netflix" Type="float" />
+          <Property Name="Snapchat" Type="float" />
+          <Property Name="Whatsapp" Type="float" />
+          <Property Name="BOT" Type="float" />
+          <Property Name="ToTok" Type="float" />
+          <Property Name="RTP" Type="float" />
+          <Property Name="iTunes" Type="float" />
+          <Property Name="MicrosoftTeams" Type="float" />
+        </EntityType>
+        <Function Name="ets_eprobe_avg_server" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_combined_vol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_data_summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_eprobe_avg" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_eprobe_ctc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_ets_probe_data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_iptv_count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_isup_summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_probe_ets_sum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_sum_apps_usage_date1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_top_apps_summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_top5_fixed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_top5_mobile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="prc_voice_summary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="AdventureModelStoreContainer">
+          <EntitySet Name="fixed_top_ups" EntityType="Self.fixed_top_ups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eprobe_fin_dest" EntityType="Self.eprobe_fin_dest" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [eprobe_fin_dest].[DateTime] AS [DateTime], 
+    [eprobe_fin_dest].[ProbeID] AS [ProbeID], 
+    [eprobe_fin_dest].[GameName] AS [GameName], 
+    [eprobe_fin_dest].[ServerLocation] AS [ServerLocation], 
+    [eprobe_fin_dest].[ServerIP] AS [ServerIP], 
+    [eprobe_fin_dest].[RTT] AS [RTT]
+    FROM [dbo].[eprobe_fin_dest] AS [eprobe_fin_dest]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdventureModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AdventureEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="prc_data_summary" ReturnType="Collection(AdventureModel.prc_data_summary_Result)" />
+          <FunctionImport Name="prc_voice_summary" ReturnType="Collection(AdventureModel.prc_voice_summary_Result)" />
+          <FunctionImport Name="prc_isup_summary" ReturnType="Collection(AdventureModel.prc_isup_summary_Result)" />
+          <FunctionImport Name="prc_top_apps_summary" ReturnType="Collection(AdventureModel.prc_top_apps_summary_Result)" />
+          <FunctionImport Name="prc_sum_apps_usage_date1" ReturnType="Collection(AdventureModel.prc_sum_apps_usage_date1_Result)" />
+          <EntitySet Name="fixed_top_ups" EntityType="AdventureModel.fixed_top_ups" />
+          <FunctionImport Name="prc_iptv_count" ReturnType="Collection(AdventureModel.prc_iptv_count_Result)" />
+          <FunctionImport Name="prc_top5_mobile" ReturnType="Collection(AdventureModel.prc_top5_mobile_Result)" />
+          <FunctionImport Name="prc_top5_fixed" ReturnType="Collection(AdventureModel.prc_top5_fixed_Result)" />
+          <FunctionImport Name="prc_combined_vol" ReturnType="Collection(AdventureModel.prc_combined_vol_Result)" />
+          <FunctionImport Name="prc_ets_probe_data" ReturnType="Collection(AdventureModel.prc_ets_probe_data_Result)" />
+          <FunctionImport Name="prc_probe_ets_sum" ReturnType="Collection(AdventureModel.prc_probe_ets_sum_Result)" />
+          <EntitySet Name="eprobe_fin_dest" EntityType="AdventureModel.eprobe_fin_dest" />
+          <FunctionImport Name="prc_eprobe_ctc" ReturnType="Collection(AdventureModel.prc_eprobe_ctc_Result)" />
+          <FunctionImport Name="prc_eprobe_avg" ReturnType="Collection(AdventureModel.prc_eprobe_avg_Result)" />
+          <FunctionImport Name="ets_eprobe_avg_server" ReturnType="Collection(AdventureModel.ets_eprobe_avg_server_Result)" />
+        </EntityContainer>
+        <ComplexType Name="prc_data_summary_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="Mobile_Data__TB_" Nullable="true" />
+          <Property Type="Double" Name="Fixed_Data__PB_" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_voice_summary_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="Mobile_Voice__erlang_" Nullable="true" />
+          <Property Type="Double" Name="Fixed_Voice__mins_" Nullable="true" />
+          <Property Type="Double" Name="IDD_OG__mins_" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_isup_summary_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="ISUP_ASR__perc_" Nullable="true" />
+          <Property Type="Double" Name="ISUP_NER_NW__perc_" Nullable="true" />
+          <Property Type="Double" Name="ISUP_SIP_ASR__perc_" Nullable="true" />
+          <Property Type="Double" Name="ISUP_SIP_NER_NW__perc_" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_top_apps_summary_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="Mobile_Top_Apps_Volume__TB_" Nullable="true" />
+          <Property Type="Double" Name="Fixed_Top_Apps_Volume__PB_" Nullable="true" />
+          <Property Type="Double" Name="IPTV_users_count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_sum_apps_usage_date1_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Double" Name="usage" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="fixed_top_ups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="Double" />
+          <Property Name="Facebook" Type="Double" />
+          <Property Name="TikTok" Type="Double" />
+          <Property Name="Google" Type="Double" />
+          <Property Name="Twitter" Type="Double" />
+          <Property Name="Youtube" Type="Double" />
+          <Property Name="iCloud" Type="Double" />
+          <Property Name="Amazon" Type="Double" />
+          <Property Name="HTTP" Type="Double" />
+          <Property Name="Instagram" Type="Double" />
+          <Property Name="ZOOM" Type="Double" />
+          <Property Name="HTTPS" Type="Double" />
+          <Property Name="Netflix" Type="Double" />
+          <Property Name="Snapchat" Type="Double" />
+          <Property Name="Whatsapp" Type="Double" />
+          <Property Name="BOT" Type="Double" />
+          <Property Name="ToTok" Type="Double" />
+          <Property Name="RTP" Type="Double" />
+          <Property Name="iTunes" Type="Double" />
+          <Property Name="MicrosoftTeams" Type="Double" />
+        </EntityType>
+        <ComplexType Name="prc_iptv_count_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="Double" Name="Hour" Nullable="true" />
+          <Property Type="Double" Name="IPTV_Users_Count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="prc_top5_mobile_Result">
+          <Property Type="Decimal" Name="usage" Nullable="true" Precision="10" Scale="6" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="prc_top5_fixed_Result">
+          <Property Type="Decimal" Name="usage" Nullable="true" Precision="10" Scale="6" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="prc_combined_vol_Result">
+          <Property Type="DateTime" Name="date" Nullable="true" />
+          <Property Type="String" Name="applicationname" Nullable="true" MaxLength="128" />
+          <Property Type="Decimal" Name="fixed" Nullable="true" Precision="10" Scale="6" />
+          <Property Type="Decimal" Name="mobile" Nullable="true" Precision="10" Scale="6" />
+        </ComplexType>
+        <ComplexType Name="prc_ets_probe_data_Result">
+          <Property Type="DateTime" Name="Column1" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ProbeID" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="GameName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ServerLocation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ServerIP" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RTT" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="prc_probe_ets_sum_Result">
+          <Property Type="DateTime" Name="DateTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="GameName" Nullable="true" MaxLength="50" />
+          <Property Type="Double" Name="RTT" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="eprobe_fin_dest">
+          <Key>
+            <PropertyRef Name="DateTime" />
+            <PropertyRef Name="ProbeID" />
+            <PropertyRef Name="GameName" />
+            <PropertyRef Name="ServerIP" />
+            <PropertyRef Name="RTT" />
+          </Key>
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ProbeID" Type="Int32" Nullable="false" />
+          <Property Name="GameName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServerLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServerIP" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RTT" Type="Double" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="prc_eprobe_ctc_Result">
+          <Property Type="Double" Name="RTT" Nullable="true" />
+          <Property Type="String" Name="Gamename" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="datetime" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="prc_eprobe_avg_Result">
+          <Property Type="Double" Name="RTT" Nullable="true" />
+          <Property Type="DateTime" Name="datatime_hour" Nullable="false" />
+          <Property Type="String" Name="GameName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ets_eprobe_avg_server_Result">
+          <Property Type="String" Name="GameName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ServerLocation" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="datatime_hour" Nullable="false" />
+          <Property Type="Double" Name="Avg_RTT" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdventureModelStoreContainer" CdmEntityContainer="AdventureEntities" >
+          <FunctionImportMapping FunctionImportName="prc_data_summary" FunctionName="AdventureModel.Store.prc_data_summary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_data_summary_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Mobile_Data__TB_" ColumnName="Mobile Data (TB)" />
+                <ScalarProperty Name="Fixed_Data__PB_" ColumnName="Fixed Data (PB)" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_voice_summary" FunctionName="AdventureModel.Store.prc_voice_summary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_voice_summary_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Mobile_Voice__erlang_" ColumnName="Mobile Voice (erlang)" />
+                <ScalarProperty Name="Fixed_Voice__mins_" ColumnName="Fixed Voice (mins)" />
+                <ScalarProperty Name="IDD_OG__mins_" ColumnName="IDD OG (mins)" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_isup_summary" FunctionName="AdventureModel.Store.prc_isup_summary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_isup_summary_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="ISUP_ASR__perc_" ColumnName="ISUP ASR (perc)" />
+                <ScalarProperty Name="ISUP_NER_NW__perc_" ColumnName="ISUP NER NW (perc)" />
+                <ScalarProperty Name="ISUP_SIP_ASR__perc_" ColumnName="ISUP SIP ASR (perc)" />
+                <ScalarProperty Name="ISUP_SIP_NER_NW__perc_" ColumnName="ISUP SIP NER NW (perc)" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_top_apps_summary" FunctionName="AdventureModel.Store.prc_top_apps_summary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_top_apps_summary_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Mobile_Top_Apps_Volume__TB_" ColumnName="Mobile Top Apps Volume (TB)" />
+                <ScalarProperty Name="Fixed_Top_Apps_Volume__PB_" ColumnName="Fixed Top Apps Volume (PB)" />
+                <ScalarProperty Name="IPTV_users_count" ColumnName="IPTV users count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_sum_apps_usage_date1" FunctionName="AdventureModel.Store.prc_sum_apps_usage_date1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_sum_apps_usage_date1_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="usage" ColumnName="usage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="fixed_top_ups">
+            <EntityTypeMapping TypeName="AdventureModel.fixed_top_ups">
+              <MappingFragment StoreEntitySet="fixed_top_ups">
+                <ScalarProperty Name="MicrosoftTeams" ColumnName="MicrosoftTeams" />
+                <ScalarProperty Name="iTunes" ColumnName="iTunes" />
+                <ScalarProperty Name="RTP" ColumnName="RTP" />
+                <ScalarProperty Name="ToTok" ColumnName="ToTok" />
+                <ScalarProperty Name="BOT" ColumnName="BOT" />
+                <ScalarProperty Name="Whatsapp" ColumnName="Whatsapp" />
+                <ScalarProperty Name="Snapchat" ColumnName="Snapchat" />
+                <ScalarProperty Name="Netflix" ColumnName="Netflix" />
+                <ScalarProperty Name="HTTPS" ColumnName="HTTPS" />
+                <ScalarProperty Name="ZOOM" ColumnName="ZOOM" />
+                <ScalarProperty Name="Instagram" ColumnName="Instagram" />
+                <ScalarProperty Name="HTTP" ColumnName="HTTP" />
+                <ScalarProperty Name="Amazon" ColumnName="Amazon" />
+                <ScalarProperty Name="iCloud" ColumnName="iCloud" />
+                <ScalarProperty Name="Youtube" ColumnName="Youtube" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="Google" ColumnName="Google" />
+                <ScalarProperty Name="TikTok" ColumnName="TikTok" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="prc_iptv_count" FunctionName="AdventureModel.Store.prc_iptv_count">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_iptv_count_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+                <ScalarProperty Name="IPTV_Users_Count" ColumnName="IPTV Users Count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_top5_mobile" FunctionName="AdventureModel.Store.prc_top5_mobile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_top5_mobile_Result">
+                <ScalarProperty Name="usage" ColumnName="usage" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_top5_fixed" FunctionName="AdventureModel.Store.prc_top5_fixed">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_top5_fixed_Result">
+                <ScalarProperty Name="usage" ColumnName="usage" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_combined_vol" FunctionName="AdventureModel.Store.prc_combined_vol">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_combined_vol_Result">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="applicationname" ColumnName="applicationname" />
+                <ScalarProperty Name="fixed" ColumnName="fixed" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_ets_probe_data" FunctionName="AdventureModel.Store.prc_ets_probe_data">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_ets_probe_data_Result">
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="ProbeID" ColumnName="ProbeID" />
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+                <ScalarProperty Name="ServerLocation" ColumnName="ServerLocation" />
+                <ScalarProperty Name="ServerIP" ColumnName="ServerIP" />
+                <ScalarProperty Name="RTT" ColumnName="RTT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_probe_ets_sum" FunctionName="AdventureModel.Store.prc_probe_ets_sum">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_probe_ets_sum_Result">
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+                <ScalarProperty Name="RTT" ColumnName="RTT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="eprobe_fin_dest">
+            <EntityTypeMapping TypeName="AdventureModel.eprobe_fin_dest">
+              <MappingFragment StoreEntitySet="eprobe_fin_dest">
+                <ScalarProperty Name="RTT" ColumnName="RTT" />
+                <ScalarProperty Name="ServerIP" ColumnName="ServerIP" />
+                <ScalarProperty Name="ServerLocation" ColumnName="ServerLocation" />
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+                <ScalarProperty Name="ProbeID" ColumnName="ProbeID" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="prc_eprobe_ctc" FunctionName="AdventureModel.Store.prc_eprobe_ctc">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_eprobe_ctc_Result">
+                <ScalarProperty Name="RTT" ColumnName="RTT" />
+                <ScalarProperty Name="Gamename" ColumnName="Gamename" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prc_eprobe_avg" FunctionName="AdventureModel.Store.prc_eprobe_avg">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.prc_eprobe_avg_Result">
+                <ScalarProperty Name="RTT" ColumnName="RTT" />
+                <ScalarProperty Name="datatime_hour" ColumnName="datatime_hour" />
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ets_eprobe_avg_server" FunctionName="AdventureModel.Store.ets_eprobe_avg_server">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AdventureModel.ets_eprobe_avg_server_Result">
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+                <ScalarProperty Name="ServerLocation" ColumnName="ServerLocation" />
+                <ScalarProperty Name="datatime_hour" ColumnName="datatime_hour" />
+                <ScalarProperty Name="Avg_RTT" ColumnName="Avg_RTT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

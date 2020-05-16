@@ -1,0 +1,1224 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/Content/assets/img/favicon.png">
+    <title>
+        Black Dashboard by Creative Tim
+    </title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="~/Content/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="~/Content/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/Content/assets/demo/demo.css" rel="stylesheet" />
+    <link href="~/Content/assets/demo/demo.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style type="text/css">
+        #result {
+            text-align: right;
+            color: gray;
+            min-height: 2em;
+        }
+
+        #table-sparkline {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        td, th {
+            padding: 5px;
+            border-bottom: 1px solid silver;
+            height: 20px;
+        }
+
+        thead th {
+            border-top: 2px solid gray;
+            border-bottom: 2px solid gray;
+        }
+
+        .highcharts-tooltip > span {
+            background: white;
+            border: 1px solid silver;
+            border-radius: 3px;
+            box-shadow: 1px 1px 2px #888;
+            padding: 8px;
+        }
+
+        #container {
+            height: 500px;
+        }
+
+
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 320px;
+            max-width: 700px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+        .card-tasks .card-body i {
+            color: #54587f;
+            font-size: 1.4em;
+        }
+
+        .difference {
+            text-align: center;
+        }
+
+        .highcharts-background {
+            fill: transparent;
+        }
+
+        .highcharts-title {
+            display: none !important;
+        }
+
+
+        .highcharts-credits {
+            display: none !important;
+        }
+
+        .highcharts-container, .highcharts-container svg {
+            width: 100% !important;
+        }
+
+        .card-body {
+            height: 410px;
+            width: 540px;
+        }
+
+        .chart-area {
+            height: 500px;
+            width: 500px;
+        }
+       
+        .cardhcount{
+             height: 300px;
+            width: 1225px;
+        }
+    </style>
+</head>
+
+<body class="">
+    <div class="wrapper">
+        @{ Html.RenderAction("SideMenu", "dashboard");}
+        <div class="main-panel">
+            <!-- End Navbar -->
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-chart">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">Data Usage</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <div id="container_data"></div>
+                                    @*  <canvas id="container_axis"></canvas>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card card-chart">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">Voice Usage</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <div id="container_voice"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-chart">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">ISUP Usage</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <div id="container_ISUP"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card card-chart">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h2 class="card-title">TOP Apps</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <div id="TopAppsChart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card cardhcount">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <div class="col-sm-6 text-left">
+                                        <h5 class="card-category">User Counts</h5>
+                                        <h2 class="card-title">IPTV</h2>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                            <label class="btn btn-sm btn-primary btn-simple " id="4_1">
+                                                <input type="radio" name="options" checked>
+                                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Monthly<sup> Count</sup></span>
+                                                <span class="d-block d-sm-none">
+                                                    <i class="tim-icons icon-single-02"></i>
+                                                </span>
+                                            </label>
+                                            <label class="btn btn-sm btn-primary btn-simple" id="4_2">
+                                                <input type="radio" class="d-none d-sm-none" name="options">
+                                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Daily<sup> Count</sup></span>
+                                                <span class="d-block d-sm-none">
+                                                    <i class="tim-icons icon-gift-2"></i>
+                                                </span>
+                                            </label>
+                                            <label class="btn btn-sm btn-primary btn-simple active" id="4_3">
+                                                <input type="radio" class="d-none d-sm-none" name="options">
+                                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Hourly<sup> Count</sup></span>
+                                                <span class="d-block d-sm-none">
+                                                    <i class="tim-icons icon-gift-2"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="card">
+                                    <canvas id="IPTV_Count"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/jquery.min.js"></script>
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!--  Google Maps Plugin    -->
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!-- Chart JS -->
+    <script src="~/Content/assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/Content/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/black-dashboard.min.js?v=1.0.0"></script><!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <script src="~/Content/assets/demo/demo.js"></script>
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $sidebar = $('.sidebar');
+                $navbar = $('.navbar');
+                $main_panel = $('.main-panel');
+
+                $full_page = $('.full-page');
+
+                $sidebar_responsive = $('body > .navbar-collapse');
+                sidebar_mini_active = true;
+                white_color = false;
+
+                window_width = $(window).width();
+
+                fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+                $('.fixed-plugin a').click(function (event) {
+                    if ($(this).hasClass('switch-trigger')) {
+                        if (event.stopPropagation) {
+                            event.stopPropagation();
+                        } else if (window.event) {
+                            window.event.cancelBubble = true;
+                        }
+                    }
+                });
+
+                $('.fixed-plugin .background-color span').click(function () {
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+
+                    var new_color = $(this).data('color');
+
+                    if ($sidebar.length != 0) {
+                        $sidebar.attr('data', new_color);
+                    }
+
+                    if ($main_panel.length != 0) {
+                        $main_panel.attr('data', new_color);
+                    }
+
+                    if ($full_page.length != 0) {
+                        $full_page.attr('filter-color', new_color);
+                    }
+
+                    if ($sidebar_responsive.length != 0) {
+                        $sidebar_responsive.attr('data', new_color);
+                    }
+                });
+
+                $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (sidebar_mini_active == true) {
+                        $('body').removeClass('sidebar-mini');
+                        sidebar_mini_active = false;
+                        blackDashboard.showSidebarMessage('Sidebar mini deactivated~/Content.');
+                    } else {
+                        $('body').addClass('sidebar-mini');
+                        sidebar_mini_active = true;
+                        blackDashboard.showSidebarMessage('Sidebar mini activated~/Content.');
+                    }
+
+                    // we simulate the window Resize so the charts will get updated in realtime.
+                    var simulateWindowResize = setInterval(function () {
+                        window.dispatchEvent(new Event('resize'));
+                    }, 180);
+
+                    // we stop the simulation of Window Resize after the animations are completed
+                    setTimeout(function () {
+                        clearInterval(simulateWindowResize);
+                    }, 1000);
+                });
+
+                $('.switch-change-color input').on("switchChange.bootstrapSwitch", function () {
+                    var $btn = $(this);
+
+                    if (white_color == true) {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').removeClass('white-content');
+                        }, 900);
+                        white_color = false;
+                    } else {
+
+                        $('body').addClass('change-background');
+                        setTimeout(function () {
+                            $('body').removeClass('change-background');
+                            $('body').addClass('white-content');
+                        }, 900);
+
+                        white_color = true;
+                    }
+
+
+                });
+
+                $('.light-badge').click(function () {
+                    $('body').addClass('white-content');
+                });
+
+                $('.dark-badge').click(function () {
+                    $('body').removeClass('white-content');
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/Trends/GetDataMaster", function (data) {
+
+                var date = [];
+                var f_usage = [];
+                var m_usage = [];
+
+                for (var i = 0; i < data.datausage.length; i++) {
+                    date.push(data.datausage[i].date);
+                    f_usage.push(data.datausage[i].f_usage);
+                    m_usage.push(data.datausage[i].m_usage);
+                }
+
+                Highcharts.chart('container_data', {
+                    chart: {
+                        zoomType: 'xy',
+
+                    },
+                    //title: {
+                    //    text: 'Average Monthly Weather Data for Tokyo',
+                    //    align: 'left'
+                    //},
+                    xAxis: [{
+                        categories: date,
+                        crosshair: true,
+                        labels: {
+                            style: {
+                                color: "#B0BEC5"
+                            }
+                        },
+                    }],
+                    yAxis: [{ // Primary yAxis
+
+                        title: {
+                            text: 'Mobile',
+                            align: 'right',
+                            style: {
+                                color: "#ef9a9a"
+                            }
+                        },
+                        labels: {
+                            format: '{value} TB',
+                            style: {
+                                align: 'right',
+                                color: "#ef9a9a"
+                            }
+                        },
+
+                        opposite: false
+
+                    }, { // Tertiary yAxis
+
+                        gridLineWidth: 0,
+                        title: {
+                            text: ' ',
+
+                            style: {
+                                color: "#80DEEA"
+                            }
+                        },
+                        labels: {
+                            align: 'left',
+                            format: '{value} PB',
+                            style: {
+                                color: "#80DEEA"
+                            }
+                        },
+                        opposite: true
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 80,
+                        verticalAlign: 'top',
+                        y: 55,
+                        floating: true
+
+                    },
+                    series: [{
+                        name: 'Fixed',
+                        type: 'spline',
+                        yAxis: 1,
+                        data: f_usage,
+                        color: '#80DEEA',
+                        marker: {
+                            enabled: false
+                        },
+                        dashStyle: 'shortdot',
+                        tooltip: {
+                            valueSuffix: ' PB'
+                        }
+
+                    }, {
+                        name: 'Mobile',
+                        type: 'spline',
+                        data: m_usage,
+                        color: '#ef9a9a',
+                        tooltip: {
+                            valueSuffix: ' TB'
+                        }
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    floating: false,
+                                    layout: 'horizontal',
+                                    align: 'left',
+                                    verticalAlign: 'bottom',
+                                    x: 0,
+                                    y: 0
+                                },
+                                yAxis: [{
+
+                                    labels: {
+                                        align: 'left',
+                                        x: 0,
+                                        y: -6,
+                                    },
+                                    showLastLabel: false
+                                }]
+                            }
+                        }]
+                    }
+                });
+
+            });
+            $.getJSON("/Trends/GetVoiceMaster", function (data) {
+
+                var date = [];
+                var idd_voice = [];
+                var f_voice = [];
+                var m_voice = [];
+                for (var i = 0; i < data.voicedata.length; i++) {
+                    date.push(data.voicedata[i].date);
+                    idd_voice.push(data.voicedata[i].idd_voice);
+                    f_voice.push(data.voicedata[i].f_voice);
+                    m_voice.push(data.voicedata[i].m_voice);
+
+                }
+
+                Highcharts.chart('container_voice', {
+                    chart: {
+                        zoomType: 'xy'
+                    },
+                    xAxis: [{
+                        categories: date,
+                        crosshair: true,
+                        labels: {
+                            style: {
+                                color: "#B0BEC5"
+                            }
+                        },
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} mins',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        title: {
+                            text: 'Mobile',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        opposite: true
+
+                    }, { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'IDD',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} mins',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        }
+
+                    }, { // Tertiary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Fixed',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        labels: {
+                            format: '{value} mins',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 80,
+                        verticalAlign: 'top',
+                        y: 55,
+                        floating: true
+                    },
+                    series: [{
+                        name: 'IDD Voice',
+                        type: 'spline',
+                        yAxis: 1,
+                        color: '#F8BBD0',
+                        data: idd_voice,
+                        marker: {
+                            enabled: false
+
+                        },
+                        tooltip: {
+                            valueSuffix: ' mm'
+                        }
+
+                    }, {
+                        name: 'Fixed',
+                        type: 'spline',
+                        yAxis: 2,
+                        data: f_voice,
+                        color: '#43A047',
+                        marker: {
+                            enabled: false
+
+                        },
+                        dashStyle: 'LongDash',
+                        tooltip: {
+                            valueSuffix: ' mins'
+                        }
+
+                    }, {
+                        name: 'Mobile',
+                        type: 'spline',
+                        color: '#C8E6C9',
+                        data: m_voice,
+                        marker: {
+                            enabled: false
+
+                        },
+                        dashStyle: 'ShortDash',
+                        tooltip: {
+                            valueSuffix: ' mins'
+                        }
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 700
+                            },
+                            chartOptions: {
+                                legend: {
+                                    floating: false,
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    x: 0,
+                                    y: 0
+                                },
+                                yAxis: [{
+                                    labels: {
+                                        align: 'right',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }, {
+                                    labels: {
+                                        align: 'left',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }, {
+                                    visible: false
+                                }]
+                            }
+                        }]
+                    }
+                });
+
+
+            });
+            $.getJSON("/Trends/GetIsupMaster", function (data) {
+
+                var date = [];
+                var asr = [];
+                var nernw = [];
+                var sipasr = [];
+                var sipnernw = [];
+                var chart_data = [];
+                var chart_labels = [];
+
+                for (var i = 0; i < data.sup_combinedtable.length; i++) {
+                    date.push(data.sup_combinedtable[i].date);
+                    sipnernw.push(data.sup_combinedtable[i].sipnernw);
+                    nernw.push(data.sup_combinedtable[i].nernw);
+                    sipasr.push(data.sup_combinedtable[i].sipasr);
+                    asr.push(data.sup_combinedtable[i].asr);
+
+                }
+
+                Highcharts.chart('container_ISUP', {
+                    chart: {
+                        zoomType: 'xy'
+                    },
+                    xAxis: [{
+                        categories: date,
+                        crosshair: true,
+                        labels: {
+                            style: {
+                                color: "#B0BEC5"
+                            }
+                        },
+                    }],
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} %',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        title: {
+                            text: 'sipnernw',
+                            style: {
+                                color: Highcharts.getOptions().colors[2]
+                            }
+                        },
+                        opposite: true
+
+                    }, { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'nernw',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        },
+                        labels: {
+                            format: '{value} %',
+                            style: {
+                                color: Highcharts.getOptions().colors[0]
+                            }
+                        }
+
+                    }, { // Tertiary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'sipasr',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        labels: {
+                            format: '{value} %',
+                            style: {
+                                color: Highcharts.getOptions().colors[1]
+                            }
+                        },
+                        opposite: true
+                    }
+                        , { // Tertiary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'asr',
+                            style: {
+                                color: Highcharts.getOptions().colors[3]
+                            }
+                        },
+                        labels: {
+                            format: '{value} %',
+                            style: {
+                                color: Highcharts.getOptions().colors[3]
+                            }
+                        },
+                        opposite: true
+                    }
+                    ],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 80,
+                        verticalAlign: 'top',
+                        y: 55,
+                        floating: true
+                    },
+                    series: [{
+                        name: 'sipnernw',
+                        type: 'spline',
+                        yAxis: 1,
+                        color: '#F8BBD0',
+                        data: sipnernw,
+                        marker: {
+                            enabled: false
+
+                        },
+                        tooltip: {
+                            valueSuffix: ' %'
+                        }
+
+                    }, {
+                        name: 'nernw',
+                        type: 'spline',
+                        yAxis: 2,
+                        data: nernw,
+                        color: '#43A047',
+                        marker: {
+                            enabled: false
+
+                        },
+                        dashStyle: 'LongDash',
+                        tooltip: {
+                            valueSuffix: ' %'
+                        }
+
+                    }, {
+                        name: 'sipasr',
+                        type: 'spline',
+                        color: '#C8E6C9',
+                        data: sipasr,
+                        marker: {
+                            enabled: false
+
+                        },
+                        dashStyle: 'ShortDash',
+                        tooltip: {
+                            valueSuffix: ' %'
+                        }
+                    },
+                    {
+                        name: 'asr',
+                        type: 'spline',
+                        color: '#E040FB',
+                        data: asr,
+                        marker: {
+                            enabled: false
+
+                        },
+                        dashStyle: 'ShortDash',
+                        tooltip: {
+                            valueSuffix: ' %'
+                        }
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 700
+                            },
+                            chartOptions: {
+                                legend: {
+                                    floating: false,
+                                    layout: 'horizontal',
+                                    align: 'center',
+                                    verticalAlign: 'bottom',
+                                    x: 0,
+                                    y: 0
+                                },
+                                yAxis: [{
+                                    labels: {
+                                        align: 'right',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }, {
+                                    labels: {
+                                        align: 'left',
+                                        x: 0,
+                                        y: -6
+                                    },
+                                    showLastLabel: false
+                                }, {
+                                    visible: false
+                                }]
+                            }
+                        }]
+                    }
+                });
+
+
+                //var ctx = document.getElementById("ISUPChart").getContext('2d');
+
+                //var gradientStroke = ctx.createLinearGradient(29, 140, 248, 0);
+
+                //gradientStroke.addColorStop(1, 'rgba(29,140,248,0)');
+                //gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0)');
+                //gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //purple colors
+                //var config = {
+                //    type: 'line',
+                //    data: {
+                //        labels: chart_labels,
+                //        datasets: [{
+                //            label: "Data Usage",
+                //            fill: true,
+                //            backgroundColor: gradientStroke,
+                //            borderColor: '#8ACCAC',
+                //            borderWidth: 2,
+                //            borderDash: [],
+                //            borderDashOffset: 0.0,
+                //            pointBackgroundColor: '#8ACCAC',
+                //            pointBorderColor: 'rgba(255,255,255,0)',
+                //            pointHoverBackgroundColor: '#8ACCAC',
+                //            pointBorderWidth: 20,
+                //            pointHoverRadius: 4,
+                //            pointHoverBorderWidth: 15,
+                //            pointRadius: 4,
+                //            data: chart_data,
+                //        }]
+                //    },
+                //    options: gradientChartOptionsConfigurationWithTooltipPurple
+                //};
+                //var myChartData = new Chart(ctx, config);
+                //$("#2_0").click(function () {
+                //    var data = myChartData.config.data;
+                //    data.datasets[0].data = chart_data;
+                //    data.labels = chart_labels;
+                //    myChartData.update();
+                //});
+                //$("#2_1").click(function () {
+                //    var data = myChartData.config.data;
+                //    data.datasets[0].data = nernw;
+                //    data.labels = chart_labels;
+                //    myChartData.update();
+                //});
+                //$("#2_2").click(function () {
+                //    var data = myChartData.config.data;
+                //    data.datasets[0].data = sipasr;
+                //    data.labels = chart_labels;
+                //    myChartData.update();
+                //});
+                //$("#2_3").click(function () {
+                //    var data = myChartData.config.data;
+                //    data.datasets[0].data = sipnernw;
+                //    data.labels = chart_labels;
+                //    myChartData.update();
+                //});
+            });
+            $.getJSON("/Trends/GetTopAppsMaster", function (data) {
+                var date = [];
+                var t_fix = [];
+                var t_mob = [];
+
+
+                for (var i = 0; i < data.top_combinedtable.length; i++) {
+                    date.push(data.top_combinedtable[i].date);
+                    t_fix.push(data.top_combinedtable[i].t_fix);
+                    t_mob.push(data.top_combinedtable[i].t_mob);
+
+                }
+                Highcharts.chart('TopAppsChart', {
+                    chart: {
+                        zoomType: 'xy',
+
+                    },
+                    //title: {
+                    //    text: 'Average Monthly Weather Data for Tokyo',
+                    //    align: 'left'
+                    //},
+                    xAxis: [{
+                        categories: date,
+                        crosshair: true,
+                        labels: {
+                            style: {
+                                color: "#B0BEC5"
+                            }
+                        },
+                    }],
+                    yAxis: [{ // Primary yAxis
+
+                        title: {
+                            text: 'Mobile',
+                            align: 'right',
+                            style: {
+                                color: "#ef9a9a"
+                            }
+                        },
+                        labels: {
+                            format: '{value} TB',
+                            style: {
+                                align: 'right',
+                                color: "#ef9a9a"
+                            }
+                        },
+
+                        opposite: false
+
+                    }, { // Tertiary yAxis
+
+                        gridLineWidth: 0,
+                        title: {
+                            text: ' ',
+
+                            style: {
+                                color: "#80DEEA"
+                            }
+                        },
+                        labels: {
+                            align: 'left',
+                            format: '{value} PB',
+                            style: {
+                                color: "#80DEEA"
+                            }
+                        },
+                        opposite: true
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'left',
+                        x: 80,
+                        verticalAlign: 'top',
+                        y: 55,
+                        floating: true
+
+                    },
+                    series: [{
+                        name: 'Fixed',
+                        type: 'spline',
+                        yAxis: 1,
+                        data: t_fix,
+                        color: '#80DEEA',
+                        marker: {
+                            enabled: false
+                        },
+                        dashStyle: 'shortdot',
+                        tooltip: {
+                            valueSuffix: ' PB'
+                        }
+
+                    }, {
+                        name: 'Mobile',
+                        type: 'spline',
+                        data: t_mob,
+                        color: '#ef9a9a',
+                        tooltip: {
+                            valueSuffix: ' TB'
+                        }
+                    }],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 500
+                            },
+                            chartOptions: {
+                                legend: {
+                                    floating: false,
+                                    layout: 'horizontal',
+                                    align: 'left',
+                                    verticalAlign: 'bottom',
+                                    x: 0,
+                                    y: 0
+                                },
+                                yAxis: [{
+
+                                    labels: {
+                                        align: 'left',
+                                        x: 0,
+                                        y: -6,
+                                    },
+                                    showLastLabel: false
+                                }]
+                            }
+                        }]
+                    }
+                });
+            });
+            $.getJSON("/Trends/Get_Iptv_Count", function (data) {
+
+                var Monthly = [];
+                var Daily = [];
+                var Hourly = [];
+                var Month = [];
+                var Day = [];
+                var Hour = [];
+
+                for (var i = 0; i < data.Monthly.length; i++) {
+                    Monthly.push(data.Monthly[i].Monthly_Count);
+                    Month.push(data.Monthly[i].Month);
+                }
+
+                for (var i = 0; i < data.Daily.length; i++) {
+                    Daily.push(data.Daily[i].Daily_Count);
+                    Day.push(data.Daily[i].Day);
+                }
+
+                for (var i = 0; i < data.Hourly.length; i++) {
+                    Hourly.push(data.Hourly[i].Hourly_Count);
+                    Hour.push(data.Hourly[i].Hour);
+                }
+
+                var ctx = document.getElementById("IPTV_Count").getContext("2d");
+
+                var gradientStroke_h = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+                gradientStroke_h.addColorStop(1, 'rgba(156,39,176 ,1)');
+                gradientStroke_h.addColorStop(0, 'rgba(206,147,216 ,1)'); //violot colors
+
+                var gradientStroke_d = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+                gradientStroke_d.addColorStop(1, 'rgba(233,30,99 ,1)');
+                gradientStroke_d.addColorStop(0, 'rgba(244,143,177 ,1)'); //blue colors
+
+                var gradientStroke_m = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+                gradientStroke_m.addColorStop(1, 'rgba(63,81,181 ,1)');
+                gradientStroke_m.addColorStop(0, 'rgba(159,168,218 ,1)'); //red colors
+
+
+
+                var myChartData = new Chart(ctx, {
+                    type: 'bar',
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
+                    data: {
+                        labels: Hour,
+                        datasets: [{
+                            label: "No.Of Users",
+                            fill: true,
+                            backgroundColor: gradientStroke_h,
+                            hoverBackgroundColor: gradientStroke_h,
+                            borderColor: 'transparent',
+                            borderWidth: 2,
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            data: Hourly,
+                        }]
+                    },
+                    options: gradientBarChartConfiguration
+                });
+
+
+
+                //monthly
+                $("#4_1").click(function () {
+                    var data = myChartData.config.data;
+                    data.datasets[0].data = Monthly;
+                    data.labels = Month;
+                    data.datasets[0].fill = false;
+                    data.datasets[0].backgroundColor = gradientStroke_m;
+                    data.datasets[0].hoverBackgroundColor = gradientStroke_m;
+
+                    myChartData.update();
+                });
+                //daily
+                $("#4_2").click(function () {
+                    var data = myChartData.config.data;
+                    data.datasets[0].data = Daily;
+                    data.labels = Day;
+                    data.datasets[0].fill = false;
+                    data.datasets[0].backgroundColor = gradientStroke_d;
+                    data.datasets[0].hoverBackgroundColor = gradientStroke_d;
+
+                    myChartData.update();
+                });
+                //hourly
+                $("#4_3").click(function () {
+
+
+
+                    var data = myChartData.config.data;
+                    data.datasets[0].data = Hourly;
+                    data.labels = Hour;
+                    data.datasets[0].fill = true;
+                    data.datasets[0].backgroundColor = gradientStroke_h;
+                    data.datasets[0].hoverBackgroundColor = gradientStroke_h;
+
+                    myChartData.update();
+                });
+
+            });
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
+
+        });</script>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+        window.TrackJS &&
+            TrackJS.install({
+                token: "ee6fab19c5a04ac1a32a645abde4613a",
+                application: "black-Trends-free"
+            });</script>
+
+
+
+</body>
+</html>
